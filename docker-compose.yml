@@ -6,8 +6,13 @@ services:
     build: .
     networks:
       - app_network
-    env_file:
-      - .env
+    environment:
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - MONGO_URI=${MONGO_URI}
+      - MONGO_SECRET=${MONGO_SECRET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
 
   redis:
     container_name: redis
