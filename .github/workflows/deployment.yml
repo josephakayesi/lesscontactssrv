@@ -9,6 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: josephakayesi/lesscontactssrv
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       
@@ -25,4 +31,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: josephakayesi/lesscontactssrv:latest
+          tags: ${{ steps.meta.outputs.tags }}
