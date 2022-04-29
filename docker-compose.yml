@@ -2,6 +2,7 @@ version: '3.9'
 services:
   srv:
     # container_name: srv
+    image: josephakayesi/lesscontactssrv:latest
     restart: always
     build: .
     networks:
