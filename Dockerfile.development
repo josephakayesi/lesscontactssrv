@@ -1,0 +1,15 @@
+FROM node:alpine
+
+RUN apk update
+
+WORKDIR /app
+
+ADD package*.json /app/
+
+RUN npm i
+
+COPY . /app
+
+EXPOSE 5000
+
+CMD ["npm", "start"]

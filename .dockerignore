@@ -1,0 +1,10 @@
+logs
+dist
+build
+node_modules
+*.log
+dump.rdb
+.git
+.gitignore
+docker-compose*
+Dockerfile*
