@@ -1,6 +1,6 @@
 import { createServer } from 'http'
 import app from './app'
-import { port } from './config/keys'
+import { environment, port } from './config/keys'
 import Logger from './infrastructure/Logger'
 import { io } from './socket'
 export const server = createServer(app)
@@ -14,7 +14,7 @@ server
 		// Set initial value for visits
 		Cache.set('visits', '0')
 
-		console.log('App listening on port ' + port)
+		console.log(`app running in ${environment} and listening on port ${port}`)
 	})
 	.on('error', e => Logger.error(e))
 
