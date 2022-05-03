@@ -1,19 +1,14 @@
-import redis, { RedisClient, ClientOpts } from 'redis'
-import { promisify, inspect } from 'util'
-import { environment, redisHost, redisPort, redisCloudURL } from './keys'
+import { createClient } from 'redis'
+import { promisify } from 'util'
+import { redisHost, redisPort, redisCloudURL } from './keys'
 import Logger from '../infrastructure/Logger'
-import e from 'express'
 
-// const opts: ClientOpts = {
-// 	host: redisHost,
-// 	port: Number(redisPort)
-// }
-
-const opts: ClientOpts = {
-	host: !redisCloudURL ? redisHost : undefined,
-	port: !redisCloudURL ? redisPort : undefined,
+const opts = {
 	url: redisCloudURL ?? undefined
 }
+
+// const redisClient = createClient({ url: opts.url, legacyMode: true })
+
 interface CacheMethod {
 	set(key: string, value: string): Promise<void> | void
 	get(key: string): Promise<string> | string
@@ -41,20 +36,21 @@ class Cache implements CacheMethod {
 }
 
 class RedisCache implements CacheMethod {
-	protected redisClient: RedisClient
+	protected redisClient: any
 	protected setAsync: any
 	protected getAsync: any
 
 	constructor() {
-		this.redisClient = redis.createClient({ url: opts.url })
+		this.redisClient = createClient({ url: opts.url, legacyMode: true })
 		this.setAsync = promisify(this.redisClient.set).bind(this.redisClient)
 		this.getAsync = promisify(this.redisClient.get).bind(this.redisClient)
 	}
 
-	connect() {
-		this.redisClient.on('ready', () => {
-			Logger.info(`Redis cache connected on host ${redisHost} and on port ${redisPort}`)
-		})
+	async connect() {
+		await this.redisClient.connect()
+		console.log(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
+
+		Logger.info(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
 	}
 
 	async set(key: string, value: string | number | boolean) {
