@@ -51,8 +51,9 @@ class RedisCache implements CacheMethod {
 	}
 
 	async connect() {
+		console.log(`redis cache trying to connect on url: ${opts.url}`)
 		await this.redisClient.connect()
-		console.log(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
+		console.log(`redis cache connected on url: ${opts.url}`)
 
 		Logger.info(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
 	}

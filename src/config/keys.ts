@@ -9,7 +9,7 @@ export const databaseURI = process.env.MONGO_URI || 'mongo://localhost:27017/kho
 export const logDir = process.env.LOG_DIR || 'logs'
 
 // Redis
-export const redisHost = environment === 'production' ? 'redis' : 'localhost'
+export const redisHost = process.env.REDIS_HOST
 export const redisPort: number = Number(process.env.REDIS_PORT) || 6379
 export const redisPassword = process.env.REDIS_PASSWORD || ''
 export const redisCloudPassword = process.env.REDIS_CLOUD_PASSWORD || ''
