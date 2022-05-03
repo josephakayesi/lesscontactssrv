@@ -23,6 +23,8 @@ server
 process.on('unhandledRejection', (err: any) => {
 	console.log(`Error: ${err.message}`)
 	// Close server and exit process
+	Cache.disconnect()
+
 	server.close(() => process.exit(1))
 })
 

@@ -26,6 +26,10 @@ class Cache implements CacheMethod {
 		this.cacheClient.connect()
 	}
 
+	disconnect() {
+		this.cacheClient.connect()
+	}
+
 	set(key: string, value: string) {
 		this.cacheClient.set(key, value)
 	}
@@ -51,6 +55,10 @@ class RedisCache implements CacheMethod {
 		console.log(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
 
 		Logger.info(`redis cache connected on host ${redisHost} and on port ${redisPort}`)
+	}
+
+	async disconnect() {
+		await this.redisClient.quit()
 	}
 
 	async set(key: string, value: string | number | boolean) {
